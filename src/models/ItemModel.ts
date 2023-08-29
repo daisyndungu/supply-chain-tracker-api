@@ -26,4 +26,4 @@ const itemSchema: Schema = new Schema<IItem>({
 
 const ItemModel = model<IItem>('Item', itemSchema);
 
-export { IItem, ItemModel }
+export { IItem, ItemModel };

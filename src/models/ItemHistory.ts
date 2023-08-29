@@ -15,4 +15,4 @@ const ItemHistory = new Schema({
     changedBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
-export const itemHistoryModel = model<IItemHistory>('ItemHistory', ItemHistory)
+export const itemHistoryModel = model<IItemHistory>('ItemHistory', ItemHistory);
