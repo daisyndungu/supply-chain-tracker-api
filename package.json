@@ -23,6 +23,7 @@
   "dependencies": {
     "@types/mongoose": "^5.11.97",
     "express": "^4.17.1",
-    "mongoose": "^7.4.5"
+    "mongoose": "^7.4.5",
+    "ts-dotenv": "^0.9.1"
   }
 }
