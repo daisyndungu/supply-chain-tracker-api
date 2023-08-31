@@ -13,7 +13,7 @@ server.get('/', (req: Request, res: Response) => {
     res.send('Hello To Supply Chain Tracker & Tracer!');
 });
 
-server.use('supplychain/api/v1', router);
+server.use('/supplychain/api/v1', router);
 
 connectToDatabase().then(() => {
     server.listen(port, () => {

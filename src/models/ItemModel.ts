@@ -1,4 +1,5 @@
-import { Document, Schema, model, Types } from 'mongoose'
+import { Document, Schema, model, Types } from 'mongoose';
+import { } from './UserModel'
 
 // TODO add status eg Deleted, Active
 
@@ -8,17 +9,16 @@ interface IItem extends Document {
     price: number;
     serialNumber: string;
     createdAt: Date,
-    // events: Types.ObjectId[];
-    // history: Types.ObjectId[];
+    consumerId: Types.ObjectId;
 }
 
 const itemSchema: Schema = new Schema<IItem>({
     name: { type: String, required: true },
     color: String,
     price: Number,
-    serialNumber: String,
+    serialNumber: { type: String, required: true },
     createdAt: {type: Date, default: Date.now},
-    // events: [{ type: Schema.Types.ObjectId, ref: 'ItemEvent' }]
+    consumerId: { type: Schema.Types.ObjectId } // make this required field
 });
 
 const ItemModel = model<IItem>('Item', itemSchema);
