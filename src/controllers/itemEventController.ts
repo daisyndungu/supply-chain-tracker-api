@@ -16,4 +16,15 @@ async function createItemEvent(req: Request, res: Response){
     }
 }
 
-export { createItemEvent }
+// add a shortcut to get the last item
+async function getAllEventsByItemId(req: Request, res: Response){
+    try{
+        const { id } = req.params;
+        const allEvents = await ItemEventModel.find({ itemId: id });
+        res.status(200).json({ data: allEvents})
+    } catch(error){
+        res.status(500).json({ error })
+    }
+}
+
+export { createItemEvent, getAllEventsByItemId }
