@@ -23,7 +23,8 @@ interface IUser extends Document {
     country: string,
     phoneNumber: string,
     userType: UserType,
-    status: AccountStatus
+    status: AccountStatus,
+    createdAt: Date
 }
 
 export const UserSchema = new Schema<IUser>({
@@ -37,6 +38,7 @@ export const UserSchema = new Schema<IUser>({
     phoneNumber: {type: String, required: true},
     userType: {type: String, enum: Object.values(UserType), required: true, default: UserType.User},
     status: {type: String, enum: Object.values(AccountStatus), default: AccountStatus.Active},
+    createdAt: {type: Date, default: Date.now},
 });
 
 const UserModel = model<IUser>('User', UserSchema)

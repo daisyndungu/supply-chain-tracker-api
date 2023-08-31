@@ -21,7 +21,7 @@ const ItemEventSchema = new Schema<IItemEvent>({
     itemId: { type: Schema.Types.ObjectId, ref: 'Item', required: true},
     custodianId: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
     updatedBy: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
-    createdAt: Date,
+    createdAt: {type: Date, default: Date.now},
     location: String,
     status: {type: String, enum: Object.values(Status), default: Status.InProgress},
 })

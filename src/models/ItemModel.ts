@@ -7,6 +7,7 @@ interface IItem extends Document {
     color: string;
     price: number;
     serialNumber: string;
+    createdAt: Date,
     // events: Types.ObjectId[];
     // history: Types.ObjectId[];
 }
@@ -16,6 +17,7 @@ const itemSchema: Schema = new Schema<IItem>({
     color: String,
     price: Number,
     serialNumber: String,
+    createdAt: {type: Date, default: Date.now},
     // events: [{ type: Schema.Types.ObjectId, ref: 'ItemEvent' }]
 });
 

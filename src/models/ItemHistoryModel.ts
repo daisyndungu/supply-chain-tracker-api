@@ -10,7 +10,7 @@ interface IItemHistory extends Document {
 
 const ItemHistory = new Schema({
     itemId: { type: Schema.Types.ObjectId, ref: 'Item' },
-    createdAt: Date,
+    createdAt: {type: Date, default: Date.now},
     whatChanged: ItemModel,
     changedBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
