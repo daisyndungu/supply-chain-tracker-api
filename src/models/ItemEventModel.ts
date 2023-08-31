@@ -18,12 +18,14 @@ interface IItemEvent extends Document {
 }
 
 const ItemEventSchema = new Schema<IItemEvent>({
-    itemId: { type: Schema.Types.ObjectId, ref: 'Item'},
-    custodianId: { type: Schema.Types.ObjectId, ref: 'User'},
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'User'},
+    itemId: { type: Schema.Types.ObjectId, ref: 'Item', required: true},
+    custodianId: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
     createdAt: Date,
     location: String,
     status: {type: String, enum: Object.values(Status), default: Status.InProgress},
 })
 
-export const ItemTypeModel = model<IItemEvent>('ItemEvent', ItemEventSchema);
+const ItemEventModel = model<IItemEvent>('ItemEvent', ItemEventSchema);
+
+export { IItemEvent, ItemEventModel }

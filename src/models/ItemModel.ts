@@ -1,12 +1,14 @@
 import { Document, Schema, model, Types } from 'mongoose'
 
+// TODO add status eg Deleted, Active
+
 interface IItem extends Document {
     name: string;
     color: string;
     price: number;
     serialNumber: string;
-    events: Types.ObjectId[];
-    history: Types.ObjectId[];
+    // events: Types.ObjectId[];
+    // history: Types.ObjectId[];
 }
 
 const itemSchema: Schema = new Schema<IItem>({
@@ -14,7 +16,7 @@ const itemSchema: Schema = new Schema<IItem>({
     color: String,
     price: Number,
     serialNumber: String,
-    events: [{ type: Schema.Types.ObjectId, ref: 'ItemEvent' }]
+    // events: [{ type: Schema.Types.ObjectId, ref: 'ItemEvent' }]
 });
 
 const ItemModel = model<IItem>('Item', itemSchema);
