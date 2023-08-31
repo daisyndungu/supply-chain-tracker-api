@@ -7,11 +7,6 @@ interface IItem extends Document {
     serialNumber: string;
     events: Types.ObjectId[];
     history: Types.ObjectId[];
-    // referenceDataHistory: [ReferenceData], // auditing re
-    // status: 
-    // Postgres MVCC
-    // Idempotency/Deduping
-    // Use transactions to ensure pesistence
 }
 
 const itemSchema: Schema = new Schema<IItem>({
@@ -21,8 +16,6 @@ const itemSchema: Schema = new Schema<IItem>({
     serialNumber: String,
     events: [{ type: Schema.Types.ObjectId, ref: 'ItemEvent' }]
 });
-
-// monitoring metrics, sentrics, testing, api level, contollo, actuator equivalent.
 
 const ItemModel = model<IItem>('Item', itemSchema);
 
