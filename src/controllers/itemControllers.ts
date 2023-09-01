@@ -5,6 +5,12 @@ import { IItem, ItemModel } from '../models/ItemModel';
 async function createItem(req: Request, res: Response){
     try{
         const newItem: IItem = { ...req.body };
+        const item = await ItemModel.findOne({ serialNumber: newItem.serialNumber });
+        
+        if(item){
+            return res.status(400).json({error: `Item with serialNumber ${item.serialNumber} already exists`})
+        }
+
         const createdItem = await ItemModel.create(newItem);
         res.status(201).json({data: createdItem});
     } catch(error) {
