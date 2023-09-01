@@ -16,7 +16,7 @@ async function createItemEvent(req: Request, res: Response){
     }
 }
 
-// add a shortcut to get the last item
+// TODO add a shortcut to get the last item
 async function getAllEventsByItemId(req: Request, res: Response){
     try{
         const { id } = req.params;

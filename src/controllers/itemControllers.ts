@@ -21,7 +21,7 @@ async function createItem(req: Request, res: Response){
 async function updateItem(req: Request, res: Response) {
     try{
         const { id } = req.params;
-        const incomingChanges: IItem = { ...req.body }
+        const incomingChanges: IItem = { ...req.body };
         const updatedItem = await ItemModel.findByIdAndUpdate(id, incomingChanges, {returnDocument: 'after'})
         res.status(200).json({message: 'Item updated!', data: updatedItem})
     } catch(error){
