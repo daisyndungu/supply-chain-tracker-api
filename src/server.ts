@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
-import { connectToDatabase } from './db';
+import { connectToDatabase } from './helpers';
 import router from './routes';
 
 const server = express();

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { load } from 'ts-dotenv';
 
+// TODO(clean up) move to helpers file/folder
 const env = load({
     MONGODB_URL: String,
     MONGODB_PORT: Number,
@@ -9,7 +10,7 @@ const env = load({
 
 const MONGODB_URI = `${env.MONGODB_URL}:${env.MONGODB_PORT}/${env.MONGODB_DATABASENAME}`;
 
-export const connectToDatabase = async (): Promise<void> => {
+const connectToDatabase = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
@@ -17,3 +18,5 @@ export const connectToDatabase = async (): Promise<void> => {
     console.error('Error connecting to MongoDB:', error);
   }
 };
+
+export { connectToDatabase }

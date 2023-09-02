@@ -1,6 +1,7 @@
-import { Document, Schema, model } from 'mongoose'
+import * as validator from 'validator';
+import { Document, Schema, model } from 'mongoose';
 
-enum UserType {
+enum UserRole {
     Admin = 'ADMIN',
     custodian = 'CUSTODIAN',
     Consumer = 'CONSUMER',
@@ -22,23 +23,30 @@ interface IUser extends Document {
     city: string,
     country: string,
     phoneNumber: string,
-    userType: UserType,
+    userRole: UserRole,
     status: AccountStatus,
-    createdAt: Date
+    createdAt: Date,
+    password: string
 }
 
 export const UserSchema = new Schema<IUser>({
     username: {type: String, required: true},
-    emailAddress: {type: String, required: true},
+    emailAddress: {type: String, required: true, unique: true, validate: {
+        validator: (value: string) => {
+          return validator.isEmail(value);
+        },
+        message: 'Invalid email address.',
+      }},
     address: {type: String, required: true},
     title: String,
     companyName: {type: String, required: true},
     city: {type: String, required: true},
     country: {type: String, required: true},
     phoneNumber: {type: String, required: true},
-    userType: {type: String, enum: Object.values(UserType), required: true, default: UserType.User},
+    userRole: {type: String, enum: Object.values(UserRole), required: true, default: UserRole.User},
     status: {type: String, enum: Object.values(AccountStatus), default: AccountStatus.Active},
     createdAt: {type: Date, default: Date.now},
+    password: { type: String, required: true }
 });
 
 const UserModel = model<IUser>('User', UserSchema)
