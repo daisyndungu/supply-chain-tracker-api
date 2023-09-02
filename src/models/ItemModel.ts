@@ -9,15 +9,17 @@ interface IItem extends Document {
     serialNumber: string;
     createdAt: Date,
     consumerId: Types.ObjectId;
+    createdBy: Types.ObjectId;
 }
 
 const itemSchema: Schema = new Schema<IItem>({
     name: { type: String, required: true },
     color: String,
     price: Number,
-    serialNumber: { type: String, required: true }, // TODO: Can be updated by ADMINs only
+    serialNumber: { type: String, required: true, unique: true }, // TODO: Can be updated by ADMINs only
     createdAt: {type: Date, default: Date.now},
-    consumerId: { type: Schema.Types.ObjectId } // make this required field
+    consumerId: { type: Schema.Types.ObjectId }, // make this required field
+    createdBy: { type: Schema.Types.ObjectId, required: true }
 });
 
 const ItemModel = model<IItem>('Item', itemSchema);

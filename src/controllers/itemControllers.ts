@@ -5,7 +5,9 @@ import { IItem, ItemModel } from '../models/ItemModel';
 async function createItem(req: Request, res: Response){
     try{
         const newItem: IItem = { ...req.body };
-        const item = await ItemModel.findOne({ serialNumber: newItem.serialNumber }); // Edit line to use a callback instead
+        newItem.createdBy = req["userDetails"].userId;
+
+        const item = await ItemModel.findOne({ serialNumber: newItem.serialNumber });
         
         if(item){
             return res.status(400).json({error: `Item with serialNumber ${item.serialNumber} already exists`})
@@ -22,7 +24,8 @@ async function updateItem(req: Request, res: Response) {
     try{
         const { id } = req.params;
         const incomingChanges: IItem = { ...req.body };
-        const updatedItem = await ItemModel.findByIdAndUpdate(id, incomingChanges, {returnDocument: 'after'})
+        const updatedItem = await ItemModel.findByIdAndUpdate(id, incomingChanges, {returnDocument: 'after'});
+
         res.status(200).json({message: 'Item updated!', data: updatedItem})
     } catch(error){
         res.status(500).json({error: `failed to update item. ${error}`});

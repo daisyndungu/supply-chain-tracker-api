@@ -2,16 +2,17 @@ import * as validator from 'validator';
 import { Document, Schema, model } from 'mongoose';
 
 enum UserRole {
-    Admin = 'ADMIN',
-    custodian = 'CUSTODIAN',
-    Consumer = 'CONSUMER',
-    User = 'USER'
+    SUPERUSER = 'SUPERUSER',
+    ADMIN = 'ADMIN',
+    CUSTODIAN = 'CUSTODIAN',
+    CONSUMER = 'CONSUMER',
+    USER = 'USER'
 }
 
 enum AccountStatus {
-    Active = 'ACTIVE',
-    Deleted = 'DELETED',
-    Suspended = 'SUSPENDED',
+    ACTIVE = 'ACTIVE',
+    DELETEd = 'DELETED',
+    substring = 'SUSPENDED',
 }
 
 interface IUser extends Document {
@@ -43,12 +44,12 @@ export const UserSchema = new Schema<IUser>({
     city: {type: String, required: true},
     country: {type: String, required: true},
     phoneNumber: {type: String, required: true},
-    userRole: {type: String, enum: Object.values(UserRole), required: true, default: UserRole.User},
-    status: {type: String, enum: Object.values(AccountStatus), default: AccountStatus.Active},
+    userRole: {type: String, enum: Object.values(UserRole), required: true, default: UserRole.USER},
+    status: {type: String, enum: Object.values(AccountStatus), default: AccountStatus.ACTIVE},
     createdAt: {type: Date, default: Date.now},
     password: { type: String, required: true }
 });
 
 const UserModel = model<IUser>('User', UserSchema)
 
-export { IUser, UserModel };
+export { IUser, UserModel, UserRole };
