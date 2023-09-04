@@ -3,6 +3,7 @@ import { load } from 'ts-dotenv';
 
 // TODO(clean up) move to helpers file/folder
 const ENV = load({
+    PORT: Number,
     MONGODB_URL: String,
     MONGODB_PORT: Number,
     MONGODB_DATABASENAME: String,

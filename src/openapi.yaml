@@ -1,0 +1,316 @@
+openapi: 3.1.3
+info:
+  title: Supply Chain Item API
+  version: 1.0.0
+  description: APIs for Supply chain tracking and tracing
+servers:
+  - url: http://localhost:3000/supplychain/api/v1
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      description: Create a new user account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: User already exists or invalid request. The request may be missing required fields or contain invalid data.
+
+  /login:
+    post:
+      summary: Log in as an existing user
+      description: Authenticate an existing user by providing their email address and password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                emailAddress:
+                  type: string
+                  description: The user's email address.
+                password:
+                  type: string
+                  format: password
+                  description: The user's password.
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Authentication token for the user's session.
+        '401':
+          description: Invalid credentials. The provided email address and/or password is incorrect.
+
+  /items:
+    post:
+      summary: Create a new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Item with the same serial number already exists
+        '500':
+          description: Internal server error
+
+  /items?isCustodian=true:
+    get:
+        summary: Get all items created by or custodied by the user
+        parameters:
+          - name: isCustodian
+            in: query
+            required: false
+            schema:
+              type: boolean
+        responses:
+          '200':
+            description: List of items
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Item'
+          '500':
+            description: Internal server error
+
+  /items/{id}:
+    put:
+      summary: Update an existing item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+        '500':
+          description: Internal server error
+    get:
+      summary: Get an item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+        '500':
+          description: Internal server error
+
+  /items/{id}/events:
+    post:
+      summary: Create a new item event
+      description: Create a new event for an item.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemEvent'
+      responses:
+        '201':
+          description: Item event created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemEvent'
+        '400':
+          description: Invalid request or status update. The request may be missing required fields or contain invalid data.
+        '404':
+          description: Item not found. The specified item does not exist.
+    get:
+      summary: Get all events for an item
+      description: Retrieve a list of all events associated with an item.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of item events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemEvent'
+        '500':
+          description: Internal server error. An unexpected error occurred on the server.
+
+  /items/{id}/events?lastEvent=true:
+    get:
+      summary: Get the last event for an item
+      description: Retrieve the most recent event associated with an item.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: lastEvent
+          in: query
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Last item event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemEvent'
+        '500':
+          description: Internal server error. An unexpected error occurred on the server.
+
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the item
+        color:
+          type: string
+          description: The color of the item
+        serialNumber:
+          type: string
+          description: The serial number of the item (unique)
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date and time of the item
+        createdBy:
+          type: string
+          description: The ID of the user who created the item
+        custodian:
+          type: string
+          description: The ID of the user who is the custodian of the item
+        itemEvents:
+          type: array
+          items:
+            type: string
+            description: The IDs of item events associated with the item
+        status:
+          type: string
+          enum:
+            - MISSING
+            - NOTRETURNED
+            - DAMAGED
+            - INCUSTODY
+          description: The status of the item
+
+    ItemEvent:
+      type: object
+      properties:
+        itemId:
+          type: string
+          description: The ID of the item associated with the event.
+        custodian:
+          type: string
+          description: The ID of the custodian of the item at the time of the event.
+        updatedBy:
+          type: string
+          description: The ID of the user who updated the item at the time of the event.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the event was created.
+        location:
+          type: string
+          description: The location or description of the event.
+
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username chosen by the user.
+        emailAddress:
+          type: string
+          description: The user's email address.
+        address:
+          type: string
+          description: The user's address.
+        title:
+          type: string
+          description: The user's title or salutation.
+        companyName:
+          type: string
+          description: The user's company name.
+        city:
+          type: string
+          description: The user's city.
+        country:
+          type: string
+          description: The user's country.
+        phoneNumber:
+          type: string
+          description: The user's phone number.
+        password:
+          type: string
+          description: The user's password.
+      required:
+        - username
+        - emailAddress
+        - address
+        - city
+        - country
+        - phoneNumber
+        - password
