@@ -4,7 +4,6 @@ import * as url from 'url';
 
 import { ItemEventModel, IItemEvent } from '../models/ItemEventModel';
 import { IItem, ItemModel, Status } from '../models/ItemModel'
-import { itemHistoryModel } from '../models/ItemHistoryModel';
 
 async function createItemEvent(req: Request, res: Response){
     try{
