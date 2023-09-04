@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { UserRole } from '../models/UserModel';
 
+import { ENV } from '../helpers'
 // Middleware to authorize access based on user role(s)
 export const authorize = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +23,7 @@ export const authorize = (allowedRoles: string[]) => {
     const token = authHeader.substring(tokenPrefix.length);
 
     try {
-      const decoded: any = jwt.verify(token, 'TODO - change secret');
+      const decoded: any = jwt.verify(token, ENV.JWT_SECRET_KEY);
       const userRole:UserRole  = decoded.role;
 
       if (!allowedRoles.includes(userRole)) {

@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken';
 
-import { UserModel, IUser} from '../models/UserModel'
+import { UserModel, IUser} from '../models/UserModel';
+
+import { ENV } from '../helpers'
 
 async function registerUser(req: Request, res: Response) {
     try{
@@ -38,7 +40,7 @@ async function login(req: Request, res: Response) {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id, role: user.userRole }, 'TODO - change secret', { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role: user.userRole }, ENV.JWT_SECRET_KEY , { expiresIn: ENV.JWT_EXPIRES_IN });
         res.status(200).json({ token });
     } catch(error){
         res.status(500).json({error});

@@ -1,5 +1,4 @@
 import { Document, Schema, model, Types } from 'mongoose';
-// import { } from './UserModel'
 // TODO add status eg Deleted, Active
 
 // item status eg missing, not returned, returned, notes - damaged, INCustody
