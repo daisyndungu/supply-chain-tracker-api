@@ -38,9 +38,12 @@ These are the basic steps to install and run the application locally.
       >> cd supply-chain-tracker-api
       >> git checkout dev
       >> npm install
+
+* Create a .env file and copy the contents of .env.example file into it. The new file should be in the root folder. Assign the variables in the .env file with they respective values
+  
  * To Create User accounts and items for testing purposes. 
 
-       $ ts-node ./src/seed/seed.ts
+       >> ts-node ./src/seed/seed.ts
    
  * Run server - npm/yarn or nodemon
 
