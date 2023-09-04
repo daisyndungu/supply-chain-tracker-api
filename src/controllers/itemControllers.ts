@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import * as url from 'url';
 
 import { IItem, ItemModel } from '../models/ItemModel';
 
@@ -6,6 +7,7 @@ async function createItem(req: Request, res: Response){
     try{
         const newItem: IItem = { ...req.body };
         newItem.createdBy = req["userDetails"].userId;
+        newItem.custodianId = req["userDetails"].userId;
 
         const item = await ItemModel.findOne({ serialNumber: newItem.serialNumber });
         
@@ -32,6 +34,25 @@ async function updateItem(req: Request, res: Response) {
     }
 }
 
+// get items by userid-should support getting items that a user is custodian of or has ownership
+async function getAllItemsByUserId(req: Request, res: Response) {
+    try{
+        const userId = req["userDetails"].userId;
+        const query = url.parse(req.url, true).query;
+
+        if(query['isCustodian']){
+            const myItems = await ItemModel.find({ custodianId: userId}); // change
+            res.status(200).json({ data: myItems });
+        } else {
+            // all items created by the user
+            const myItems = await ItemModel.find({ createdBy: userId}); // change
+            res.status(200).json({ data: myItems });
+        }
+    } catch(error){
+        res.status(500).json({error})
+    }
+}
+
 async function getOneItemById(req: Request, res: Response) {
     try{
         const { id } = req.params;
@@ -47,4 +68,4 @@ async function getOneItemById(req: Request, res: Response) {
     }
 }
 
-export { createItem, updateItem, getOneItemById };
+export { createItem, updateItem, getOneItemById, getAllItemsByUserId };

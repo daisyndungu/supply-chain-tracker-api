@@ -11,7 +11,6 @@ async function registerUser(req: Request, res: Response) {
         if(!existingUser){
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(newUser.password, salt);
-            console.log(salt)
             newUser.password = hashedPassword;
 
             await UserModel.create(newUser);

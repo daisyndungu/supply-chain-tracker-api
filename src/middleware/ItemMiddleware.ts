@@ -29,4 +29,19 @@ const addItemHistory = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
-export { addItemHistory }
+const updateCustodian = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const { id } = req.params;
+        const item: IItem = await ItemModel.findById(id);
+        if(item){
+            await ItemModel.findByIdAndUpdate(id, {custodianId: req["userDetails"].userId });
+            next();
+        } else {
+            return false
+        }
+    } catch(error){
+        res.status(500).json({error: `An error occured during item update: ${error}`});
+    }
+}
+
+export { addItemHistory, updateCustodian }

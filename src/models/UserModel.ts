@@ -4,7 +4,6 @@ import { Document, Schema, model } from 'mongoose';
 enum UserRole {
     SUPERUSER = 'SUPERUSER',
     ADMIN = 'ADMIN',
-    CUSTODIAN = 'CUSTODIAN',
     CONSUMER = 'CONSUMER',
     USER = 'USER'
 }

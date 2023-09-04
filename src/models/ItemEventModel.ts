@@ -5,7 +5,8 @@ enum Status {
     Pending = 'PENDING',
     Closed = 'CLOSED',
     InProgress = 'INPROGRESS',
-    Cancelled = 'CANCELLED'
+    Cancelled = 'CANCELLED',
+    DELIVERED = 'DELIVERED'
 }
 
 interface IItemEvent extends Document {
@@ -17,12 +18,14 @@ interface IItemEvent extends Document {
     status: Status,
 }
 
+//event details-explanation
+
 const ItemEventSchema = new Schema<IItemEvent>({
     itemId: { type: Schema.Types.ObjectId, ref: 'Item', required: true},
     custodianId: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
     updatedBy: { type: Schema.Types.ObjectId, ref: 'User'}, // make required
     createdAt: {type: Date, default: Date.now},
-    location: String,
+    location: { type: String, required: true},
     status: {type: String, enum: Object.values(Status), default: Status.InProgress},
 })
 
