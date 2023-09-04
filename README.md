@@ -1,6 +1,5 @@
 
-# cp2-BucketList-Application
-Supply Chain Track and Trace
+# Supply Chain Track and Trace
 
 The building blocks are:
   * NodeJS
