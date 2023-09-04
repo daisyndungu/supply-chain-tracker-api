@@ -25,6 +25,6 @@ server.use('/supplychain/api/v1', router);
 
 connectToDatabase().then(() => {
     server.listen(port, () => {
-        return console.log(`Listening to port ${port}`);
+        return true;
     })
 });

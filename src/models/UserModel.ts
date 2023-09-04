@@ -39,7 +39,7 @@ export const UserSchema = new Schema<IUser>({
       }},
     address: {type: String, required: true},
     title: String,
-    companyName: {type: String, required: true},
+    companyName: String,
     city: {type: String, required: true},
     country: {type: String, required: true},
     phoneNumber: {type: String, required: true},
