@@ -34,7 +34,7 @@ const updateCustodian = async (req: Request, res: Response, next: NextFunction) 
         const { id } = req.params;
         const item: IItem = await ItemModel.findById(id);
         if(item){
-            await ItemModel.findByIdAndUpdate(id, {custodianId: req["userDetails"].userId });
+            await ItemModel.findByIdAndUpdate(id, {custodian: req["userDetails"].userId });
             next();
         } else {
             return false

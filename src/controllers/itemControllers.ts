@@ -7,8 +7,8 @@ async function createItem(req: Request, res: Response){
     try{
         const newItem: IItem = { ...req.body };
         newItem.createdBy = req["userDetails"].userId;
-        newItem.custodianId = req["userDetails"].userId;
-
+        newItem.custodian= req["userDetails"].userId;
+        
         const item = await ItemModel.findOne({ serialNumber: newItem.serialNumber });
         
         if(item){
@@ -41,7 +41,7 @@ async function getAllItemsByUserId(req: Request, res: Response) {
         const query = url.parse(req.url, true).query;
 
         if(query['isCustodian']){
-            const myItems = await ItemModel.find({ custodianId: userId}); // change
+            const myItems = await ItemModel.find({ custodian: userId, createdBy: {$ne: userId}}); // change
             res.status(200).json({ data: myItems });
         } else {
             // all items created by the user
