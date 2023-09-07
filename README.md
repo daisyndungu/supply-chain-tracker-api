@@ -20,7 +20,7 @@ GET /item/:id/events | Returns all the events trail of an item.
 GET /item/:id/events?lastEvent=true | Returns the last event of an item.
 
 
-The Endpoints above can be tested using [this url](https://supply-chain-track-n-trace-api-f5ecf7eb7534.herokuapp.com/supplychain/api/v1/) hosted in Heroku or locally by setting up the app by following the commands below:-
+The Endpoints above can be tested using URL- https://supply-chain-track-n-trace-api-f5ecf7eb7534.herokuapp.com/supplychain/api/v1/ hosted in Heroku or locally by setting up the app by following the commands below:-
 NB: [These sample user accounts added here](https://github.com/daisyndungu/supply-chain-tracker-api/blob/dev/src/seed/seed.ts) can be used to test on both heroku and locally.
 
 ## INSTALLATION
