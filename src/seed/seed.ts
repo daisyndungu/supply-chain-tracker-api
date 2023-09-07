@@ -92,9 +92,9 @@ async function seedData() {
         const newItem = { ...item, createdBy: user._id, custodian: user._id };
         await ItemModel.create(newItem);
       }
-      return { 'message': 'Data seeded successfully!!!'};
+      console.log({ 'message': 'Data seeded successfully!!!'});
     } catch (error) {
-      return {'error': `Error seeding data: ${error}`};
+        console.log({'error': `Error seeding data: ${error}`});
     }
 }  
 
