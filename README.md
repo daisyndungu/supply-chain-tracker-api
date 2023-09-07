@@ -19,6 +19,10 @@ POST /item/:id/events | Creates a new Item Event and updates the custodian of th
 GET /item/:id/events | Returns all the events trail of an item.
 GET /item/:id/events?lastEvent=true | Returns the last event of an item.
 
+
+The Endpoints above can be tested using [this url](https://supply-chain-track-n-trace-api-f5ecf7eb7534.herokuapp.com/supplychain/api/v1/) hosted in Heroku or locally by setting up the app by following the commands below:-
+NB: [These sample user accounts added here](https://github.com/daisyndungu/supply-chain-tracker-api/blob/dev/src/seed/seed.ts) can be used to test on both heroku and locally.
+
 ## INSTALLATION
 
 These are the basic steps to install and run the application locally.
@@ -46,7 +50,7 @@ These are the basic steps to install and run the application locally.
    
 * Run server - npm/yarn or nodemon
 
-       npm start
+       npm run dev
        or
        nodemon
 * Navigate to http://localhost:3000/api-docs to view all the endpoint and their specification. The endpoint can be tested using Postman(base URL = http://localhost:3000/supplychain/api/v1). Also, [MongoDB Compas](https://www.mongodb.com/docs/compass/current/) is a handy tool for better visualization and managing data in MongoDB.
